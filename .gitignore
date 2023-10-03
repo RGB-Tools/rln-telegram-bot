@@ -1,0 +1,8 @@
+**/__pycache__
+*.pyc
+/.python-version
+/.venv
+/build
+/config.ini
+/data*
+/dist

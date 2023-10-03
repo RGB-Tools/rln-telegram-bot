@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "rgb_ln_telegram_bot"
+version = "0.1.0"
+description = "Telegram bot to test RGB payments on the Lightning Network"
+authors = ["Zoe Faltibà <zoefaltiba@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.scripts]
+bot = "rgb_ln_telegram_bot.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-telegram-bot = { version = "20.5", extras = ["job-queue"] }
+requests = "^2.31.0"
+rgb-lib = "0.2.0a5"
+sqlalchemy = "^2.0.21"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+isort = "^5.12.0"
+pydocstyle = "^6.3.0"
+pylama = "^8.4.1"
+pylint = "^2.17.5"
+vulture = "^2.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

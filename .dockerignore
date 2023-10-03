@@ -1,0 +1,13 @@
+**/__pycache__
+*.pyc
+/.python-version
+/.venv
+/build
+/config.ini
+/data*
+/dist
+/Dockerfile
+/.dockerignore
+/config.ini.sample
+/README.md
+/.git*
