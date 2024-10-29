@@ -20,6 +20,13 @@ class SendRequestStatus(enum.Enum):
     SUCCESS = 2
 
 
+class SendBtcRequestStatus(enum.Enum):
+    """Status of a SendBtcRequestStatus entry."""
+
+    PENDING = 0
+    SUCCESS = 1
+
+
 class PurchaseStatus(enum.Enum):
     """Status of a Purchase entry."""
 
@@ -71,6 +78,26 @@ class SendRequest(Base):
         self.status = SendRequestStatus.PENDING
         self.timestamp = datetime.datetime.now()
         self.rgb_invoice = None
+
+
+class SendBtcRequest(Base):
+    """DB table representing a request for some on-chain BTC."""
+
+    __tablename__ = "sendbtcrequest"
+
+    idx = mapped_column(Integer, primary_key=True)
+    user_idx = mapped_column(Integer, ForeignKey("user.idx"), nullable=False)
+    txid = mapped_column(String(256), nullable=True)
+    timestamp = mapped_column(DATETIME, nullable=False)
+    address = mapped_column(String(256), nullable=True)
+    status = mapped_column(Enum(SendBtcRequestStatus), nullable=False)
+
+    def __init__(self, user_idx):
+        """Instantiate a SendBtcRequest."""
+        self.user_idx = user_idx
+        self.status = SendBtcRequestStatus.PENDING
+        self.timestamp = datetime.datetime.now()
+        self.address = None
 
 
 class User(Base):

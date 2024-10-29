@@ -5,26 +5,26 @@ import traceback
 from logging import getLogger
 from logging.config import dictConfig
 
+import requests
 from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
-from rgb_ln_telegram_bot import msgs
-from rgb_ln_telegram_bot.ln import get_node_info, list_assets
-from rgb_ln_telegram_bot.utils import die
-
+from . import msgs
 from . import settings as sett
 from . import tasks
+from .ln import get_network_info, get_node_info, list_assets
 from .telegram_bot import (
     get_asset_handler,
+    get_btc_handler,
     get_invoice_handler,
     get_node_info_handler,
     help_handler,
     msg_handler,
-    node_command_help_handler,
     start_handler,
     unknown_command_handler,
 )
+from .utils import die, parse_network
 
 LOGGER = getLogger(__name__)
 
@@ -33,13 +33,18 @@ def main():
     """Start the bot."""
     dictConfig(sett.LOGGING)
 
-    node_info = get_node_info()
-
+    try:
+        node_info = get_node_info()
+    except requests.exceptions.ConnectionError:
+        die("Cannot connect to the node")
     sett.LIGHTNING_NODE_ID = node_info["pubkey"]
     sett.NODE_URI = f"{sett.LIGHTNING_NODE_ID}@{sett.LN_ANNOUNCEMENT_ADDR}"
 
+    network_info = get_network_info()
+    sett.NETWORK = parse_network(network_info["network"])
+
     assets = list_assets()
-    for asset in assets:
+    for asset in assets["nia"]:
         if asset["asset_id"] == sett.ASSET_ID:
             sett.ASSET_TICKER = asset["ticker"]
             break
@@ -63,8 +68,8 @@ def main():
         .build()
     )
 
-    app.add_handler(CommandHandler(sett.NODECOMMANDHELP_CMD, node_command_help_handler))
     app.add_handler(CommandHandler(sett.GETASSET_CMD, get_asset_handler))
+    app.add_handler(CommandHandler(sett.GETBTC_CMD, get_btc_handler))
     app.add_handler(CommandHandler(sett.GETINVOICE_CMD, get_invoice_handler))
     app.add_handler(CommandHandler(sett.GETNODEINFO_CMD, get_node_info_handler))
     app.add_handler(CommandHandler(sett.HELP_CMD, help_handler))
@@ -95,11 +100,11 @@ async def _post_init(application):
     """Set up the bot commands and notify the developers the bot started."""
     await application.bot.set_my_commands(
         [
-            (sett.NODECOMMANDHELP_CMD, "Show help on how to operate RLN"),
             (sett.START_CMD, "Show the welcome message"),
             (sett.HELP_CMD, "Show the help message"),
             (sett.GETINVOICE_CMD, "Get an RGB LN invoice"),
             (sett.GETASSET_CMD, "Get some RGB on-chain assets"),
+            (sett.GETBTC_CMD, "Get some on-chain bitcoins"),
             (sett.GETNODEINFO_CMD, "Get info on the bot's RGB LN node"),
         ]
     )

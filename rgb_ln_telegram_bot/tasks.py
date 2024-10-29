@@ -6,7 +6,12 @@ from logging import getLogger
 from telegram.constants import ParseMode
 
 from rgb_ln_telegram_bot.exceptions import AllocationsAlreadyAvailable
-from rgb_ln_telegram_bot.ln import asset_balance, create_utxos, get_invoice_status
+from rgb_ln_telegram_bot.ln import (
+    asset_balance,
+    btc_balance,
+    create_utxos,
+    get_invoice_status,
+)
 
 from . import msgs
 from . import settings as sett
@@ -30,6 +35,12 @@ async def node_checks(context):
     with contextlib.suppress(AllocationsAlreadyAvailable):
         create_utxos()
         LOGGER.info("Created UTXOs")
+    sat_balance = btc_balance()
+    if sat_balance["vanilla"]["future"] < sett.MIN_BTC_BALANCE:
+        msg = "BTC balance under minimum acceptable"
+        LOGGER.warning(msg)
+        if sett.DEVELOPER_CHAT_ID:
+            await context.bot.send_message(chat_id=sett.DEVELOPER_CHAT_ID, text=msg)
 
 
 async def get_invoice_check_task(context):

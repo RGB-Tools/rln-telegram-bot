@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.10-slim-bookworm
 
 ENV POETRY_VERSION=1.4.2
 ENV POETRY_HOME=/opt/poetry

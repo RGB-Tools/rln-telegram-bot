@@ -1,14 +1,14 @@
-# RGB LN Telegram Bot
+# RGB Lightning Node Telegram Bot
 
 Telegram bot to test RGB payments on the Lightning Network.
 
-It requires a running instance of [rgb-lightning-node].
+It requires a running instance of [rgb-lightning-node (RLN)].
 
 ## Build and run
 
 First, clone the project:
 ```sh
-git clone https://github.com/RGB-Tools/rgb-ln-telegram-bot
+git clone https://github.com/RGB-Tools/rln-telegram-bot
 ```
 
 Then obtain an API token that is necessary to create the Telegram bot.
@@ -53,4 +53,4 @@ poetry run pydocstyle rgb_ln_telegram_bot
 
 
 [poetry]: https://python-poetry.org/docs/
-[rgb-lightning-node]: https://github.com/RGB-Tools/rgb-lightning-node
+[rgb-lightning-node (RLN)]: https://github.com/RGB-Tools/rgb-lightning-node

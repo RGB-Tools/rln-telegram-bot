@@ -3,6 +3,8 @@ import os
 import sys
 from configparser import ConfigParser, MissingSectionHeaderError
 
+from rgb_lib import BitcoinNetwork
+
 
 def die(message=None, exit_code=1):
     """Print message to stderr and exit with the requested error code."""
@@ -42,3 +44,18 @@ def get_or_default(conf, var_name, default_val):
     """Get the requested config option, use default when missing."""
     config_val = conf.get(var_name)
     return default_val if config_val is None else config_val
+
+
+def parse_network(network):
+    """Parse the given network string and return the corresponding enum."""
+    match network:
+        case "Mainnet":
+            return BitcoinNetwork.MAINNET
+        case "Regtest":
+            return BitcoinNetwork.REGTEST
+        case "Signet":
+            return BitcoinNetwork.SIGNET
+        case "Testnet":
+            return BitcoinNetwork.TESTNET
+        case _:
+            die(f"Node is running on an unsupported network: {network}")

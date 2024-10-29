@@ -5,20 +5,19 @@ import pathlib
 from rgb_ln_telegram_bot.database import init_db_session
 from rgb_ln_telegram_bot.utils import get_or_default, get_or_exit, parse_config
 
-BOT_NAME = "RLN Testing Bot"
+BOT_NAME = "RGB LN Bot"
 BOT_DESCRIPTION = """
-This bot is intended to be used to test the RGB Lightning Node (RLN) in \
-testnet mode. The bot allows you to request some testnet RGB assets and to \
-use them to open a channel with the bot's node and to perform payments \
-towards the bot.
+This bot is intended to be used to test RGB on Lightning Network.
+It allows you to request some bitcoins and RGB assets and to use them to open \
+a channel with the bot's node and to perform payments towards the bot.
 """
 BOT_SHORT_DESCRIPTION = "Bot to test RGB payments on the LN"
 
 GETASSET_CMD = "getasset"
+GETBTC_CMD = "getbtc"
 GETINVOICE_CMD = "getinvoice"
 GETNODEINFO_CMD = "getnodeinfo"
 HELP_CMD = "help"
-NODECOMMANDHELP_CMD = "nodecommandhelp"
 START_CMD = "start"
 
 REQUESTS_TIMEOUT = 15
@@ -45,6 +44,7 @@ STICKERS = [
 ]
 
 MIN_ASSET_BALANCE = 10000
+MIN_BTC_BALANCE = 500000000  # 5 BTCs
 
 conf = parse_config()
 API_TOKEN = get_or_exit(conf, "API_TOKEN")
@@ -53,14 +53,17 @@ LN_NODE_URL = get_or_exit(conf, "LN_NODE_URL")
 LN_ANNOUNCEMENT_ADDR = get_or_exit(conf, "LN_ANNOUNCEMENT_ADDR")
 ASSET_ID = get_or_exit(conf, "ASSET_ID")
 ASSET_AMOUNT_TO_SEND = get_or_exit(conf, "ASSET_AMOUNT_TO_SEND", integer=True)
+SAT_AMOUNT_TO_SEND = get_or_exit(conf, "SAT_AMOUNT_TO_SEND", integer=True)
 INVOICE_EXPIRATION_SEC = get_or_exit(conf, "INVOICE_EXPIRATION_SEC", integer=True)
 INVOICE_PRICE = get_or_exit(conf, "INVOICE_PRICE", integer=True)
 UTXOS_TO_CREATE = get_or_exit(conf, "UTXOS_TO_CREATE", integer=True)
+FEE_RATE = get_or_exit(conf, "FEE_RATE", integer=True)
 DEVELOPER_CHAT_ID = get_or_default(conf, "DEVELOPER_CHAT_ID", "")
 LOG_LEVEL_CONSOLE = get_or_default(conf, "LOG_LEVEL_CONSOLE", "INFO")
 
 # vars set at runtime
 LIGHTNING_NODE_ID = ""
+NETWORK = None
 NODE_URI = ""
 ASSET_TICKER = ""
 

@@ -13,7 +13,7 @@ bot = "rgb_ln_telegram_bot.main:main"
 python = "^3.10"
 python-telegram-bot = { version = "20.5", extras = ["job-queue"] }
 requests = "^2.31.0"
-rgb-lib = "0.2.0a5"
+rgb-lib = "0.3.0a11"
 sqlalchemy = "^2.0.21"
 
 [tool.poetry.group.dev.dependencies]
