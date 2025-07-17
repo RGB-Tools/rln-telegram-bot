@@ -20,7 +20,6 @@ sqlalchemy = "^2.0.21"
 black = "^23.9.1"
 isort = "^5.12.0"
 pydocstyle = "^6.3.0"
-pylama = "^8.4.1"
 pylint = "^2.17.5"
 vulture = "^2.7"
 

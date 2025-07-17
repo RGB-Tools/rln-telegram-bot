@@ -38,9 +38,6 @@ poetry run pylint rgb_ln_telegram_bot
 # format code
 poetry run black rgb_ln_telegram_bot
 
-# check code quality
-poetry run pylama rgb_ln_telegram_bot
-
 # sort imports
 poetry run isort --profile black rgb_ln_telegram_bot
 

@@ -2,7 +2,6 @@
 from . import settings as sett
 
 # pylint: disable=anomalous-backslash-in-string,unnecessary-lambda-assignment
-# pylama:ignore=W605
 
 USE_HELP = f"Use /{sett.HELP_CMD} for info on what you can do with this bot\."
 

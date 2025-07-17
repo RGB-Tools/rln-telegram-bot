@@ -140,7 +140,10 @@ def send_asset(blinded_utxo, transport_endpoints):
     """Call the /sendasset API."""
     payload = {
         "asset_id": sett.ASSET_ID,
-        "amount": sett.ASSET_AMOUNT_TO_SEND,
+        "assignment": {
+            "type": "Fungible",
+            "value": sett.ASSET_AMOUNT_TO_SEND,
+        },
         "recipient_id": blinded_utxo,
         "donation": True,
         "fee_rate": sett.FEE_RATE,
