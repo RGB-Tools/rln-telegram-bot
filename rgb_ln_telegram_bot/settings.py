@@ -1,4 +1,5 @@
 """Settings module."""
+
 import os
 import pathlib
 

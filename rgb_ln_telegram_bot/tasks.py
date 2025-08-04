@@ -1,4 +1,5 @@
 """Periodic tasks module."""
+
 import contextlib
 import random
 from logging import getLogger
@@ -51,9 +52,7 @@ async def get_invoice_check_task(context):
     """
     LOGGER.debug("Checking invoice status updates...")
     with sett.Session() as session:
-        purchases = (
-            session.query(Purchase).filter_by(status=PurchaseStatus.PENDING).all()
-        )
+        purchases = session.query(Purchase).filter_by(status=PurchaseStatus.PENDING).all()
         LOGGER.debug("Found %d pending purchases", len(purchases))
 
         for purchase in purchases:
@@ -85,8 +84,6 @@ async def get_invoice_check_task(context):
                 msg = f"Invoice in unexpected status: {status}"
                 LOGGER.error(msg)
                 if sett.DEVELOPER_CHAT_ID:
-                    await context.bot.send_message(
-                        chat_id=sett.DEVELOPER_CHAT_ID, text=msg
-                    )
+                    await context.bot.send_message(chat_id=sett.DEVELOPER_CHAT_ID, text=msg)
                 purchase.status = PurchaseStatus.FAILED
                 session.commit()

@@ -1,4 +1,5 @@
 """Database models module."""
+
 import datetime
 import enum
 

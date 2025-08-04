@@ -1,4 +1,5 @@
 """Module to perform API calls to RLN."""
+
 from logging import getLogger
 
 import requests
@@ -94,18 +95,14 @@ def get_invoice_status(invoice):
 
 def get_network_info():
     """Call the /networkinfo API."""
-    res = requests.get(
-        f"{sett.LN_NODE_URL}/networkinfo", timeout=sett.REQUESTS_TIMEOUT
-    ).json()
+    res = requests.get(f"{sett.LN_NODE_URL}/networkinfo", timeout=sett.REQUESTS_TIMEOUT).json()
     _check_if_err(res)
     return res
 
 
 def get_node_info():
     """Call the /nodeinfo API."""
-    res = requests.get(
-        f"{sett.LN_NODE_URL}/nodeinfo", timeout=sett.REQUESTS_TIMEOUT
-    ).json()
+    res = requests.get(f"{sett.LN_NODE_URL}/nodeinfo", timeout=sett.REQUESTS_TIMEOUT).json()
     _check_if_err(res)
     return res
 

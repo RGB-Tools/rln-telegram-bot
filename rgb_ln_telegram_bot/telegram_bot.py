@@ -1,4 +1,5 @@
 """Bot handlers module."""
+
 import datetime
 import time
 from functools import wraps
@@ -156,9 +157,7 @@ async def _send_to_invoice(
         await _reply(update, msgs.ASSET_SENT().format(txid=txid))
         refresh_transfers()
     except InvalidTransportEndpoints:
-        LOGGER.warning(
-            "Send failed because RGB invoice has invalid transport endpoints"
-        )
+        LOGGER.warning("Send failed because RGB invoice has invalid transport endpoints")
         await _reply(update, msgs.INVALID_RGB_TRANSPORT_ENDPOINTS)
     except RecipientIDAlreadyUsed:
         LOGGER.warning("Send failed because RGB invoice has already been used")
@@ -208,8 +207,8 @@ async def get_asset_handler(update, _context):
             .order_by(SendRequest.timestamp)
         )
         if successful_interactions.count() >= sett.MAX_SUCCESSFUL_INTERACTIONS_PER_DAY:
-            next_request_time = (
-                successful_interactions.first().timestamp + datetime.timedelta(days=1)
+            next_request_time = successful_interactions.first().timestamp + datetime.timedelta(
+                days=1
             )
             when = "today"
             if now.weekday() != next_request_time.weekday():
@@ -253,8 +252,8 @@ async def get_btc_handler(update, _context):
             .order_by(SendBtcRequest.timestamp)
         )
         if successful_interactions.count() >= sett.MAX_SUCCESSFUL_INTERACTIONS_PER_DAY:
-            next_request_time = (
-                successful_interactions.first().timestamp + datetime.timedelta(days=1)
+            next_request_time = successful_interactions.first().timestamp + datetime.timedelta(
+                days=1
             )
             when = "today"
             if now.weekday() != next_request_time.weekday():
@@ -308,9 +307,7 @@ async def msg_handler(update, _context):
         LOGGER.info("Sending to %s for user %s", user_input, user.user_id)
 
         if invoice_data:
-            await _send_to_invoice(
-                update, session, user, invoice_data, user_input, pending_ass_req
-            )
+            await _send_to_invoice(update, session, user, invoice_data, user_input, pending_ass_req)
         elif address:
             await _send_to_address(update, session, user_input, pending_btc_req)
 

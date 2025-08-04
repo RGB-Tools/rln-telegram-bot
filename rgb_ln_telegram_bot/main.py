@@ -1,4 +1,5 @@
 """Entrypoint module."""
+
 import html
 import json
 import traceback
@@ -74,9 +75,7 @@ def main():
     app.add_handler(CommandHandler(sett.GETNODEINFO_CMD, get_node_info_handler))
     app.add_handler(CommandHandler(sett.HELP_CMD, help_handler))
     app.add_handler(CommandHandler(sett.START_CMD, start_handler))
-    app.add_handler(
-        MessageHandler(filters=filters.COMMAND, callback=unknown_command_handler)
-    )
+    app.add_handler(MessageHandler(filters=filters.COMMAND, callback=unknown_command_handler))
     app.add_handler(MessageHandler(filters=filters.ALL, callback=msg_handler))
 
     app.job_queue.run_repeating(
@@ -133,9 +132,7 @@ async def _error_handler(update, context):
     if not sett.DEVELOPER_CHAT_ID:
         return
 
-    tb_list = traceback.format_exception(
-        None, context.error, context.error.__traceback__
-    )
+    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
     tb_string = "".join(tb_list)
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
     message = (

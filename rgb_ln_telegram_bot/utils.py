@@ -1,4 +1,5 @@
 """Utilities module."""
+
 import os
 import sys
 from configparser import ConfigParser, MissingSectionHeaderError
