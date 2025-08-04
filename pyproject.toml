@@ -1,28 +1,46 @@
-[tool.poetry]
+[project]
 name = "rgb_ln_telegram_bot"
 version = "0.1.0"
 description = "Telegram bot to test RGB payments on the Lightning Network"
-authors = ["Zoe Faltibà <zoefaltiba@gmail.com>"]
+authors = [{name = "Zoe Faltibà", email = "<zoefaltiba@gmail.com>"}]
+keywords = ["RGB", "bitcoin", "Lightning Network"]
 readme = "README.md"
-license = "MIT"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Other/Nonlisted Topic",
+]
+requires-python = "~=3.10"
+dependencies = [
+    "python-telegram-bot[job-queue] (~=20.5)",
+    "requests~=2.31.0",
+    "rgb-lib==0.3.0b1",
+    "sqlalchemy~=2.0.21",
+]
 
-[tool.poetry.scripts]
+[project.scripts]
 bot = "rgb_ln_telegram_bot.main:main"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-python-telegram-bot = { version = "20.5", extras = ["job-queue"] }
-requests = "^2.31.0"
-rgb-lib = "0.3.0b1"
-sqlalchemy = "^2.0.21"
-
 [tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
-isort = "^5.12.0"
-pydocstyle = "^6.3.0"
-pylint = "^2.17.5"
-vulture = "^2.7"
+black = "^25.1"
+flake8 = "^7.0"
+isort = "^6.0"
+pip-audit = "^2.9.0"
+pylint = "^3.3"
+vulture = "^2.14"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core~=2.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line_length = 100
+target_version = ["py310", "py311", "py312", "py313"]
+
+[tool.vulture]
+min_confidence = 100

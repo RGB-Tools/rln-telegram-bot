@@ -45,7 +45,10 @@ poetry run isort --profile black rgb_ln_telegram_bot
 poetry run vulture rgb_ln_telegram_bot
 
 # check compliance with docstring conventions
-poetry run pydocstyle rgb_ln_telegram_bot
+poetry run flake8 rgb_ln_telegram_bot
+
+# check for known vulnerabilities
+poetry run pip-audit
 ```
 
 
