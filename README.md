@@ -18,8 +18,11 @@ the `/newbot` command and following the steps.
 Once you obtained the token you can copy the sample config file (`cp
 config.ini.sample config.ini`) and set the `API_TOKEN` key to its value.
 
-Then, issue an asset on your RGB LN node and set the `ASSET_ID` key of the
-config file to its ID.
+Then, issue an asset on your RGB LN node, set the `ASSET_ID` key of the
+config file to its ID, set the `LN_NODE_URL` so the bot can call the RGN LN
+node APIs, set the `LN_ANNOUNCEMENT_ADDR` to the public LN endpoint of the RGN
+LN node and optionally set the other keys to suit your needs. The RLN LN node
+needs to be reachable at the provided URL and unlocked for the bot to work.
 
 Finally, provided you have [poetry] installed, you can install and run the bot
 executing:

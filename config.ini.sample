@@ -1,16 +1,29 @@
 [config]
+# Telegram API token
 API_TOKEN=YourAPIToken
+# path for the bot's data directory
 DATA_DIR=data
+# URL where the bot can access the RGB LN node
 LN_NODE_URL=http://localhost:3001
+# ID of the asset the bot uses
 ASSET_ID=rgb:2uSYWzE-YvkUEXg6C-vK7gV5pqj-4LAun1jky-D73672LhW-unCWjMA
+# asset amount to send to users who paid an invoice
 ASSET_AMOUNT_TO_SEND=42
+# sat amount to send to users requesting BTC funds
 SAT_AMOUNT_TO_SEND=50000
+# public LN address for the RGB LN node
 LN_ANNOUNCEMENT_ADDR=your.public.ip:9735
+# expiration time in seconds for generated invoices
 INVOICE_EXPIRATION_SEC=900
+# asset amount to use for generated invoices
 INVOICE_PRICE=1
+# number of spare UTXOs to be kept available
 UTXOS_TO_CREATE=3
+# fee rate to use for transactions
 FEE_RATE=100
 
-# optional settings
+## optional settings
+# ID of the Telegram chat for developer messages
 DEVELOPER_CHAT_ID=YourDeveloperChatID
+# bot log level
 LOG_LEVEL_CONSOLE=INFO
