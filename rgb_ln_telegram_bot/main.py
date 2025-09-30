@@ -92,7 +92,7 @@ def main():
 
     app.add_error_handler(_error_handler)
 
-    app.run_polling(read_timeout=sett.TELEGRAM_TIMEOUT)
+    app.run_polling()
 
 
 async def _post_init(application):
