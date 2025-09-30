@@ -125,7 +125,7 @@ async def _send_to_address(update, session, user_input, pending_btc_req):
 
 async def _send_to_invoice(
     update, session, user, invoice_data, user_input, pending_ass_req
-):  # pylint: disable=too-many-arguments
+):  # pylint: disable=too-many-arguments,too-many-positional-arguments
     rgb_invoice_already_used = (
         session.query(SendRequest)
         .where(

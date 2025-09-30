@@ -1,4 +1,5 @@
 """Messages to users module."""
+
 from . import settings as sett
 
 # pylint: disable=anomalous-backslash-in-string,unnecessary-lambda-assignment
