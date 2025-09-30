@@ -19,7 +19,7 @@ requires-python = "~=3.10"
 dependencies = [
     "python-telegram-bot[job-queue] (~=20.5)",
     "requests~=2.31.0",
-    "rgb-lib==0.3.0b1",
+    "rgb-lib==0.3.0b2",
     "sqlalchemy~=2.0.21",
 ]
 
