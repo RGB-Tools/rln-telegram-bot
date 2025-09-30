@@ -8,6 +8,7 @@ from logging import getLogger
 import rgb_lib
 import sqlalchemy as sa
 from telegram.constants import ParseMode
+from telegram.error import Forbidden
 
 from rgb_ln_telegram_bot.exceptions import (
     InvalidTransportEndpoints,
@@ -44,11 +45,14 @@ def _track_time(func):
     return _wrapper
 
 
-def _reply(update, msg):
+async def _reply(update, msg):
     """Send a telegram message in markdown, disabling web page previews."""
-    return update.message.reply_text(
-        msg, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True
-    )
+    try:
+        await update.message.reply_text(
+            msg, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True
+        )
+    except Forbidden as e:
+        LOGGER.error("Didn't reply because action is forbidden: %s", e)
 
 
 def _get_user(update, session):
