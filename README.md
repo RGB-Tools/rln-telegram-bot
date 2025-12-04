@@ -31,6 +31,19 @@ poetry install
 poetry run bot
 ```
 
+The docker image can be built with:
+```sh
+docker build -t rln-telegram-bot .
+```
+
+The docker image can be run with:
+```sh
+docker run \
+    -v ./config.ini:/app/config.ini:ro \
+    -v ./data:/app/data:rw \
+    rln-telegram-bot
+```
+
 ## Develop
 
 When developing, you can run the following utilities:
