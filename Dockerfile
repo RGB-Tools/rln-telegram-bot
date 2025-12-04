@@ -1,6 +1,6 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.12-slim-trixie
 
-ENV POETRY_VERSION=2.1.3
+ENV POETRY_VERSION=2.2.1
 ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VENV=/opt/poetry-venv
 ENV POETRY_CACHE_DIR=/opt/.cache
