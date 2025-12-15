@@ -51,6 +51,15 @@ RGB_INVOICE_ALREADY_USED = """
 This RGB invoice has already been used, please send another one\.
 """
 
+RGB_INVOICE_INVALID_NETWORK = """
+This RGB invoice is for a different bitcoin network, please send another one\.
+"""
+
+RGB_INVOICE_INVALID_TYPE = """
+This RGB invoice is requesting to receive in witness but the bot supports \
+only the blind mode, please send another one\.
+"""
+
 ASSET_SENT = (
     lambda: f"""
 I have sent you {sett.ASSET_AMOUNT_TO_SEND} {sett.ASSET_TICKER} with \
