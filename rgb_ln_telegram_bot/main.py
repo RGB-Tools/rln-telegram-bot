@@ -8,7 +8,7 @@ from logging.config import dictConfig
 
 import requests
 from telegram import Update
-from telegram.constants import ParseMode
+from telegram.constants import MessageLimit, ParseMode
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
 from . import msgs
@@ -143,6 +143,11 @@ async def _error_handler(update, context):
         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
         f"<pre>{html.escape(tb_string)}</pre>"
     )
+
+    # avoid failing on too long messages
+    if len(message) > MessageLimit.MAX_TEXT_LENGTH:
+        message = msgs.MESSAGE_TOO_LONG
+
     await context.bot.send_message(
         chat_id=sett.DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
     )

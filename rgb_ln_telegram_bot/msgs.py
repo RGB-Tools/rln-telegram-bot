@@ -85,6 +85,10 @@ I have sent you {sett.SAT_AMOUNT_TO_SEND} sats with TXID:
 """
 )
 
+MESSAGE_TOO_LONG = """
+Tried to send a message over the text length limit
+"""
+
 SENDING_ASSET = (
     lambda: f"""
 I'm now sending {sett.ASSET_AMOUNT_TO_SEND} {sett.ASSET_TICKER}\.
