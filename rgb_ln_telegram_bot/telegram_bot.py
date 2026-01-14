@@ -154,7 +154,7 @@ async def _send_to_invoice(
     recipient_info = rgb_lib.RecipientInfo(invoice_data.recipient_id)
     if recipient_info.network() != sett.NETWORK:
         return await _reply(update, msgs.RGB_INVOICE_INVALID_NETWORK)
-    if recipient_info.recipient_type() != rgb_lib.RecipientType.BLINDED:
+    if recipient_info.recipient_type() != rgb_lib.RecipientType.BLIND:
         return await _reply(update, msgs.RGB_INVOICE_INVALID_TYPE)
 
     await _reply(update, msgs.SENDING_ASSET())
