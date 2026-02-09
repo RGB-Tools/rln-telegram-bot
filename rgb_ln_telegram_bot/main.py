@@ -90,6 +90,12 @@ def main():
         first=sett.CHECKS_TASK_FIRST,
     )
 
+    app.job_queue.run_repeating(
+        callback=tasks.refresh,
+        interval=sett.REFRESH_TASK_INTERVAL,
+        first=sett.CHECKS_TASK_FIRST,
+    )
+
     app.add_error_handler(_error_handler)
 
     app.run_polling()

@@ -13,6 +13,7 @@ from rgb_ln_telegram_bot.ln import (
     btc_balance,
     create_utxos,
     get_invoice_status,
+    refresh_transfers,
 )
 
 from . import msgs
@@ -104,3 +105,9 @@ async def get_invoice_check_task(context):
                     await _send_msg(context, sett.DEVELOPER_CHAT_ID, msg)
                 purchase.status = PurchaseStatus.FAILED
                 session.commit()
+
+
+async def refresh(_context):
+    """Refresh transfers, so they eventually reach a final state."""
+    LOGGER.debug("Refreshing transfers...")
+    refresh_transfers()
