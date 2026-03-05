@@ -55,7 +55,7 @@ poetry run pylint rgb_ln_telegram_bot
 poetry run black rgb_ln_telegram_bot
 
 # sort imports
-poetry run isort --profile black rgb_ln_telegram_bot
+poetry run isort rgb_ln_telegram_bot
 
 # find unused code
 poetry run vulture rgb_ln_telegram_bot
