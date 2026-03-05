@@ -9,6 +9,7 @@ from logging.config import dictConfig
 import requests
 from telegram import Update
 from telegram.constants import MessageLimit, ParseMode
+from telegram.error import NetworkError
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
 from . import msgs
@@ -136,6 +137,12 @@ async def _error_handler(update, context):
         await update.message.reply_text(msgs.SOMETHING_WENT_WRONG)
 
     if not sett.DEVELOPER_CHAT_ID:
+        return
+    if not context.error:
+        LOGGER.error("Exception with empty error")
+        return
+    if not context.error or isinstance(context.error, NetworkError):
+        LOGGER.error("telegram.error.NetworkError")
         return
 
     tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
