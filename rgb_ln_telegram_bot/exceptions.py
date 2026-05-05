@@ -5,13 +5,13 @@ class APIException(Exception):
     """API error."""
 
 
-class AllocationsAlreadyAvailable(Exception):
+class AllocationsAlreadyAvailable(APIException):
     """Allocations already available error."""
 
 
-class InvalidTransportEndpoints(Exception):
+class InvalidTransportEndpoints(APIException):
     """Invalid transport endpoints error."""
 
 
-class RecipientIDAlreadyUsed(Exception):
+class RecipientIDAlreadyUsed(APIException):
     """Recipient ID already used error."""

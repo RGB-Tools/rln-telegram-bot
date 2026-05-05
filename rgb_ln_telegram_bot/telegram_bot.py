@@ -14,7 +14,7 @@ from rgb_ln_telegram_bot.exceptions import (
     InvalidTransportEndpoints,
     RecipientIDAlreadyUsed,
 )
-from rgb_ln_telegram_bot.ln import get_invoice, refresh_transfers, send_asset, send_btc
+from rgb_ln_telegram_bot.ln import get_invoice, refresh_transfers, send_rgb, send_btc
 
 from . import msgs
 from . import settings as sett
@@ -159,18 +159,18 @@ async def _send_to_invoice(
 
     await _reply(update, msgs.SENDING_ASSET())
     try:
-        txid = send_asset(invoice_data.recipient_id, invoice_data.transport_endpoints)
+        txid = send_rgb(invoice_data.recipient_id, invoice_data.transport_endpoints)
         pending_ass_req.rgb_invoice = user_input
         pending_ass_req.status = SendRequestStatus.SUCCESS
         pending_ass_req.txid = txid
         session.commit()
         await _reply(update, msgs.ASSET_SENT().format(txid=txid))
         refresh_transfers()
-    except InvalidTransportEndpoints:
-        LOGGER.warning("Send failed because RGB invoice has invalid transport endpoints")
+    except InvalidTransportEndpoints as e:
+        LOGGER.warning("Send failed because RGB invoice has invalid transport endpoints: %s", e)
         await _reply(update, msgs.INVALID_RGB_TRANSPORT_ENDPOINTS)
-    except RecipientIDAlreadyUsed:
-        LOGGER.warning("Send failed because RGB invoice has already been used")
+    except RecipientIDAlreadyUsed as e:
+        LOGGER.warning("Send failed because recipient ID has already been used: %s", e)
         pending_ass_req.status = SendRequestStatus.RGB_INVOICE_ALREADY_USED
         session.commit()
         await _reply(update, msgs.RGB_INVOICE_ALREADY_USED)

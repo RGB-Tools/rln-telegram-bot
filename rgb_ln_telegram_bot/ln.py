@@ -20,11 +20,11 @@ def _check_if_err(res):
     if "error" in res:
         err = res["error"]
         if "Allocations already available" in err:
-            raise AllocationsAlreadyAvailable
+            raise AllocationsAlreadyAvailable(err)
         if "Invalid transport endpoints" in err:
-            raise InvalidTransportEndpoints
+            raise InvalidTransportEndpoints(err)
         if "Recipient ID already used" in err:
-            raise RecipientIDAlreadyUsed
+            raise RecipientIDAlreadyUsed(err)
         raise APIException(err)
 
 
@@ -133,23 +133,27 @@ def refresh_transfers():
     return res
 
 
-def send_asset(blinded_utxo, transport_endpoints):
-    """Call the /sendasset API."""
+def send_rgb(blinded_utxo, transport_endpoints):
+    """Call the /sendrgb API."""
     payload = {
-        "asset_id": sett.ASSET_ID,
-        "assignment": {
-            "type": "Fungible",
-            "value": sett.ASSET_AMOUNT_TO_SEND,
-        },
-        "recipient_id": blinded_utxo,
         "donation": True,
         "fee_rate": sett.FEE_RATE,
         "min_confirmations": 0,
-        "transport_endpoints": transport_endpoints,
-        "skip_sync": False,
+        "recipient_map": {
+            sett.ASSET_ID: [
+                {
+                    "recipient_id": blinded_utxo,
+                    "assignment": {
+                        "type": "Fungible",
+                        "value": sett.ASSET_AMOUNT_TO_SEND,
+                    },
+                    "transport_endpoints": transport_endpoints,
+                }
+            ],
+        },
     }
     res = requests.post(
-        f"{sett.LN_NODE_URL}/sendasset", json=payload, timeout=sett.REQUESTS_TIMEOUT
+        f"{sett.LN_NODE_URL}/sendrgb", json=payload, timeout=sett.REQUESTS_TIMEOUT
     ).json()
     _check_if_err(res)
     return res["txid"]
