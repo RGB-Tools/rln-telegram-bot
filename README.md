@@ -38,7 +38,7 @@ docker build -t rln-telegram-bot .
 
 The docker image can be run with:
 ```sh
-docker run \
+docker run --rm -it \
     -v ./config.ini:/app/config.ini:ro \
     -v ./data:/app/data:rw \
     rln-telegram-bot
