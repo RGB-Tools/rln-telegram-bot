@@ -14,7 +14,7 @@ from rgb_ln_telegram_bot.exceptions import (
     InvalidTransportEndpoints,
     RecipientIDAlreadyUsed,
 )
-from rgb_ln_telegram_bot.ln import get_invoice, refresh_transfers, send_rgb, send_btc
+from rgb_ln_telegram_bot.ln import get_invoice, refresh_transfers, send_btc, send_rgb
 
 from . import msgs
 from . import settings as sett
