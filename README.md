@@ -44,6 +44,9 @@ docker run --rm -it \
     rln-telegram-bot
 ```
 
+Note: the container runs as an unprivileged user with UID/GID `1000:1000`,
+so the host data directory must be writable by that UID/GID.
+
 ## Develop
 
 When developing, you can run the following utilities:

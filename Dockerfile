@@ -15,9 +15,16 @@ RUN python3 -m venv $POETRY_VENV \
 
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
+RUN groupadd --gid 1000 user \
+    && useradd --uid 1000 --gid user --create-home --shell /usr/sbin/nologin user \
+    && mkdir -p "$POETRY_CACHE_DIR" && chown user:user "$POETRY_CACHE_DIR"
+
 WORKDIR /app
 
-COPY . .
+COPY --chown=user:user . .
+RUN chown user:user /app
+
+USER user
 
 RUN poetry install --no-interaction --no-cache --without dev
 
